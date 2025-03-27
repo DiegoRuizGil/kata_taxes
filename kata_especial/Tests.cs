@@ -11,6 +11,9 @@ public class Tests
      *  - IRPF >= 0
      *
      * más ingresos -> más beneficios
+     *
+     * primer tramo -> [15876, 25000]
+     * segundo tramo -> (25000, infinito)
      */
     
     [Test]
@@ -31,7 +34,6 @@ public class Tests
     {
         const float exemptMinThreshold = 15876;
         Debug.Assert(income >= 0);
-        Debug.Assert(income != exemptMinThreshold, "No sabemos que hacer con esta cantidad de ingresos");
         
         if (income > exemptMinThreshold)
             return (income - exemptMinThreshold) * 0.1f;
