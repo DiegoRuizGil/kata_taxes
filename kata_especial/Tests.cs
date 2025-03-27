@@ -8,12 +8,13 @@ public class Tests
     /*
      * IRPF -> impuesto a todas las personas físicas
      *  - va por tramos (umbral superior - inferior)
+     *  - IRPF >= 0
+     * 
      * mínimo exento -> 15.876 --> 0% IRPF
      *  - tramo -> [0, 15.876] (NO SABEMOS SI ES ABIERTO O CERRADO)
      *
      * tramo inventado -> [15.876, infinito) -> IRPF = 10%
      *
-     * no se aceptan valores negativos
      */
     
     [Test]
@@ -22,9 +23,18 @@ public class Tests
         Assert.That(IRPF(8701), Is.EqualTo(0));
     }
 
+    [Test]
+    public void FirstThreshold()
+    {
+        Assert.That(IRPF(15877), Is.EqualTo(1587.7f));
+    }
+
     private float IRPF(float income)
     {
         Debug.Assert(income >= 0);
+        Debug.Assert(income != 15876, "No sabemos que hacer con esta cantidad de ingresos");
+        if (income > 15876)
+            return 1587.7f;
         return 0;
     }
 }
