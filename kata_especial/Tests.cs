@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using NUnit.Framework.Constraints;
 
 namespace kata_especial;
@@ -6,8 +7,13 @@ public class Tests
 {
     /*
      * IRPF -> impuesto a todas las personas físicas
+     *  - va por tramos (umbral superior - inferior)
      * mínimo exento -> 15.876 --> 0% IRPF
-     * 8.701
+     *  - tramo -> [0, 15.876] (NO SABEMOS SI ES ABIERTO O CERRADO)
+     *
+     * tramo inventado -> [15.876, infinito) -> IRPF = 10%
+     *
+     * no se aceptan valores negativos
      */
     
     [Test]
@@ -18,6 +24,7 @@ public class Tests
 
     private float IRPF(float income)
     {
+        Debug.Assert(income >= 0);
         return 0;
     }
 }
