@@ -26,15 +26,17 @@ public class Tests
     [Test]
     public void FirstThreshold()
     {
-        Assert.That(IRPF(15877), Is.EqualTo(1587.7f));
+        Assert.That(IRPF(15877), Is.EqualTo(1587.7f).Within(0.01f));
+        Assert.That(IRPF(15878), Is.EqualTo(1587.8f).Within(0.01f));
     }
 
     private float IRPF(float income)
     {
         Debug.Assert(income >= 0);
         Debug.Assert(income != 15876, "No sabemos que hacer con esta cantidad de ingresos");
+        
         if (income > 15876)
-            return 1587.7f;
+            return income * 0.1f;
         return 0;
     }
 }
