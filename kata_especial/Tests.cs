@@ -10,7 +10,7 @@ public class Tests
      *  - va por tramos (umbral superior - inferior)
      *  - IRPF >= 0
      *
-     * 
+     * más ingresos -> más beneficios
      */
     
     [Test]
@@ -23,8 +23,8 @@ public class Tests
     [Test]
     public void FirstThreshold()
     {
-        Assert.That(IRPF(15877), Is.EqualTo(1587.7f).Within(0.01f));
-        Assert.That(IRPF(15878), Is.EqualTo(1587.8f).Within(0.01f));
+        Assert.That(IRPF(15877), Is.EqualTo(0.1f).Within(0.01f));
+        Assert.That(IRPF(15878), Is.EqualTo(0.2f).Within(0.01f));
     }
 
     private float IRPF(float income)
@@ -33,7 +33,7 @@ public class Tests
         Debug.Assert(income != 15876, "No sabemos que hacer con esta cantidad de ingresos");
         
         if (income > 15876)
-            return income * 0.1f;
+            return (income - 15876) * 0.1f;
         return 0;
     }
 }
