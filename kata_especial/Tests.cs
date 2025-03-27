@@ -29,11 +29,12 @@ public class Tests
 
     private float IRPF(float income)
     {
+        const float exemptMinThreshold = 15876;
         Debug.Assert(income >= 0);
-        Debug.Assert(income != 15876, "No sabemos que hacer con esta cantidad de ingresos");
+        Debug.Assert(income != exemptMinThreshold, "No sabemos que hacer con esta cantidad de ingresos");
         
-        if (income > 15876)
-            return (income - 15876) * 0.1f;
+        if (income > exemptMinThreshold)
+            return (income - exemptMinThreshold) * 0.1f;
         return 0;
     }
 }
