@@ -9,18 +9,15 @@ public class Tests
      * IRPF -> impuesto a todas las personas físicas
      *  - va por tramos (umbral superior - inferior)
      *  - IRPF >= 0
+     *
      * 
-     * mínimo exento -> 15.876 --> 0% IRPF
-     *  - tramo -> [0, 15.876] (NO SABEMOS SI ES ABIERTO O CERRADO)
-     *
-     * tramo inventado -> [15.876, infinito) -> IRPF = 10%
-     *
      */
     
     [Test]
     public void ExemptMin()
     {
         Assert.That(IRPF(8701), Is.EqualTo(0));
+        Assert.That(IRPF(15875), Is.EqualTo(0));
     }
 
     [Test]
