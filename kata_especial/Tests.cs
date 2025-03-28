@@ -61,19 +61,11 @@ public class Tests
 
         if (income > exemptMinThreshold)
         {
-            float amountExceeded = income - 20200;
-            float thresholdIncome = income - exemptMinThreshold;
-            if (amountExceeded > 0)
-                thresholdIncome -= amountExceeded;
-            irpf += thresholdIncome * 0.24f;
+            irpf += ThresholdIncome(income, 20200, exemptMinThreshold) * 0.24f;
         }
         if (income > 20200)
         {
-            float amountExceeded = income - 35200;
-            float thresholdIncome = income - 20200;
-            if (amountExceeded > 0)
-                thresholdIncome -= amountExceeded;
-            irpf += thresholdIncome * 0.30f;
+            irpf += ThresholdIncome(income, 35200, 20200) * 0.30f;
         }
 
         if (income > 35200)
@@ -81,5 +73,14 @@ public class Tests
             irpf += (income - 35200) * 0.37f;
         }
         return irpf;
+    }
+
+    private float ThresholdIncome(float income, float upperThreshold, float lowerThreshold)
+    {
+        float amountExceeded = income - upperThreshold;
+        float thresholdIncome = income - lowerThreshold;
+        if (amountExceeded > 0)
+            thresholdIncome -= amountExceeded;
+        return thresholdIncome;
     }
 }
