@@ -52,6 +52,13 @@ public class Tests
         Assert.That(IRPF(47354.67f), Is.EqualTo(10034.98f).Within(0.01f));
     }
 
+    [Test]
+    public void FourthThreshold()
+    {
+        Assert.That(IRPF(60001), Is.EqualTo(14714.21f).Within(0.01f));
+        Assert.That(IRPF(230278.48f), Is.EqualTo(91339.07f).Within(0.01f));
+    }
+
     private float IRPF(float income)
     {
         Debug.Assert(income >= 0);
@@ -67,11 +74,15 @@ public class Tests
         {
             irpf += ThresholdIncome(income, 35200, 20200) * 0.30f;
         }
-
         if (income > 35200)
         {
-            irpf += (income - 35200) * 0.37f;
+            irpf += ThresholdIncome(income, 60000, 35200) * 0.37f;
         }
+        if (income > 60000)
+        {
+            irpf += ThresholdIncome(income, 300000, 60000) * 0.45f;
+        }
+        
         return irpf;
     }
 
