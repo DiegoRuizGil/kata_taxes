@@ -38,15 +38,30 @@ public class Tests
         Assert.That(IRPF(15878), Is.EqualTo(0.48f).Within(0.01f));
     }
 
+    [Test]
+    public void SecondThreshold()
+    {
+        Assert.That(IRPF(20201), Is.EqualTo(1038.06f).Within(0.01f));
+        Assert.That(IRPF(27542), Is.EqualTo(3240.36f).Within(0.01f));
+    }
+
     private float IRPF(float income)
     {
         Debug.Assert(income >= 0);
 
         const float exemptMinThreshold = 15876;
-        float percent = 0;
+        float irpf = 0f;
 
         if (income > exemptMinThreshold)
-            percent += (income - exemptMinThreshold) * 0.24f;
-        return percent;
+        {
+            float amountExceeded = income - 20200;
+            float thresholdIncome = income - exemptMinThreshold;
+            if (amountExceeded > 0)
+                thresholdIncome -= amountExceeded;
+            irpf += thresholdIncome * 0.24f;
+        }
+        if (income > 20200)
+            irpf += (income - 20200) * 0.30f;
+        return irpf;
     }
 }
