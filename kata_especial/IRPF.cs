@@ -37,25 +37,25 @@ public static class IRPF
         var irpf = 0f;
 
         if (income > ExemptMinThreshold)
-            irpf += ThresholdIncome(income, SecondThreshold, ExemptMinThreshold) * 0.24f;
+            irpf += IncomeBracketIRPF(income, ExemptMinThreshold, SecondThreshold, 0.24f);
         if (income > SecondThreshold)
-            irpf += ThresholdIncome(income, ThirdThreshold, SecondThreshold) * 0.30f;
+            irpf += IncomeBracketIRPF(income, SecondThreshold, ThirdThreshold, 0.30f);
         if (income > ThirdThreshold)
-            irpf += ThresholdIncome(income, FourthThreshold, ThirdThreshold) * 0.37f;
+            irpf += IncomeBracketIRPF(income, ThirdThreshold, FourthThreshold, 0.37f);
         if (income > FourthThreshold)
-            irpf += ThresholdIncome(income, FifthThreshold, FourthThreshold) * 0.45f;
+            irpf += IncomeBracketIRPF(income, FourthThreshold, FifthThreshold, 0.45f);
         if (income > FifthThreshold)
             irpf += (income - FifthThreshold) * 0.47f;
         
         return irpf;
     }
-    
-    private static float ThresholdIncome(float income, float upperThreshold, float lowerThreshold)
+
+    private static float IncomeBracketIRPF(float income, float lowerThreshold, float upperThreshold, float percent)
     {
         float amountExceeded = income - upperThreshold;
         float thresholdIncome = income - lowerThreshold;
         if (amountExceeded > 0)
             thresholdIncome -= amountExceeded;
-        return thresholdIncome;
+        return thresholdIncome * percent;
     }
 }
