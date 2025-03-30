@@ -4,17 +4,6 @@ namespace kata_especial;
 
 public static class IRPF
 {
-    /*
-     * IRPF -> impuesto a todas las personas físicas
-     *  - va por tramos (umbral superior - inferior)
-     *  - IRPF >= 0
-     *
-     * más ingresos -> más beneficios
-     *
-     * cifras MUY decimales
-     * incluir gastos para los autónomos (solo)
-     */
-    
     public static float Of(float income)
     {
         Debug.Assert(income >= 0);
@@ -33,6 +22,14 @@ public static class IRPF
             irpf += (income - TaxBracket.FifthThreshold) * TaxBracket.Sixth().Percent;
         
         return irpf;
+    }
+
+    public static float Of(float income, float freelanceExpenses)
+    {
+        Debug.Assert(freelanceExpenses >= 0);
+        Debug.Assert(income > freelanceExpenses);
+        
+        return Of(income - freelanceExpenses);
     }
 
     private static float IncomeBracketIRPF(float income, TaxBracket bracket)

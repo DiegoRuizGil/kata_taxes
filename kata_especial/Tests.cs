@@ -45,4 +45,10 @@ public class Tests
         Assert.That(IRPF.Of(300001), Is.EqualTo(122714.23f).Within(0.01f));
         Assert.That(IRPF.Of(705640.81f), Is.EqualTo(313364.94f).Within(0.01f));
     }
+
+    [Test]
+    public void FreelancerIRPF()
+    {
+        Assert.That(IRPF.Of(262278.48f, 32000), Is.EqualTo(91339.07f).Within(0.01f));
+    }
 }
