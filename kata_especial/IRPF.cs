@@ -23,24 +23,29 @@ public static class IRPF
      * cifras MUY decimales
      * incluir gastos para los autónomos (solo)
      */
+
+    private const float ExemptMinThreshold = 15876;
+    private const float SecondThreshold = 20200;
+    private const float ThirdThreshold = 35200;
+    private const float FourthThreshold = 60000;
+    private const float FifthThreshold = 300000;
     
     public static float Of(float income)
     {
         Debug.Assert(income >= 0);
 
-        const float exemptMinThreshold = 15876;
-        float irpf = 0f;
+        var irpf = 0f;
 
-        if (income > exemptMinThreshold)
-            irpf += ThresholdIncome(income, 20200, exemptMinThreshold) * 0.24f;
-        if (income > 20200)
-            irpf += ThresholdIncome(income, 35200, 20200) * 0.30f;
-        if (income > 35200)
-            irpf += ThresholdIncome(income, 60000, 35200) * 0.37f;
-        if (income > 60000)
-            irpf += ThresholdIncome(income, 300000, 60000) * 0.45f;
-        if (income > 300000)
-            irpf += (income - 300000) * 0.47f;
+        if (income > ExemptMinThreshold)
+            irpf += ThresholdIncome(income, SecondThreshold, ExemptMinThreshold) * 0.24f;
+        if (income > SecondThreshold)
+            irpf += ThresholdIncome(income, ThirdThreshold, SecondThreshold) * 0.30f;
+        if (income > ThirdThreshold)
+            irpf += ThresholdIncome(income, FourthThreshold, ThirdThreshold) * 0.37f;
+        if (income > FourthThreshold)
+            irpf += ThresholdIncome(income, FifthThreshold, FourthThreshold) * 0.45f;
+        if (income > FifthThreshold)
+            irpf += (income - FifthThreshold) * 0.47f;
         
         return irpf;
     }
