@@ -10,16 +10,20 @@ public static class IRPF
 
         var irpf = 0f;
 
-        if (income > TaxBracket.ExemptMinThreshold)
-            irpf += IncomeBracketIRPF(income, TaxBracket.Second());
-        if (income > TaxBracket.SecondThreshold)
-            irpf += IncomeBracketIRPF(income, TaxBracket.Third());
-        if (income > TaxBracket.ThirdThreshold)
-            irpf += IncomeBracketIRPF(income, TaxBracket.Fourth());
-        if (income > TaxBracket.FourthThreshold)
-            irpf += IncomeBracketIRPF(income, TaxBracket.Fifth());
-        if (income > TaxBracket.FifthThreshold)
-            irpf += (income - TaxBracket.FifthThreshold) * TaxBracket.Sixth().Percent;
+        if (TaxBracket.BelongToSecondBracket(income))
+            irpf += ApplyBracketTaxes(income, TaxBracket.SecondBracket());
+        
+        if (TaxBracket.BelongToThirdBracket(income))
+            irpf += ApplyBracketTaxes(income, TaxBracket.ThirdBracket());
+        
+        if (TaxBracket.BelongToFourthBracket(income))
+            irpf += ApplyBracketTaxes(income, TaxBracket.FourthBracket());
+        
+        if (TaxBracket.BelongToFifthBracket(income))
+            irpf += ApplyBracketTaxes(income, TaxBracket.FifthBracket());
+        
+        if (TaxBracket.BelongToSixthBracket(income))
+            irpf += ApplySixthBracketTaxes(income);
         
         return irpf;
     }
@@ -32,12 +36,17 @@ public static class IRPF
         return Of(income - freelanceExpenses);
     }
 
-    private static float IncomeBracketIRPF(float income, TaxBracket bracket)
+    private static float ApplyBracketTaxes(float income, TaxBracket bracket)
     {
         float amountExceeded = income - bracket.UpperThreshold;
         float thresholdIncome = income - bracket.LowerThreshold;
         if (amountExceeded > 0)
             thresholdIncome -= amountExceeded;
         return thresholdIncome * bracket.Percent;
+    }
+    
+    private static float ApplySixthBracketTaxes(float income)
+    {
+        return (income - TaxBracket.FifthThreshold) * TaxBracket.SixthBracket().Percent;
     }
 }

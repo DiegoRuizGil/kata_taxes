@@ -23,28 +23,58 @@ public readonly struct TaxBracket
         _percent = percent;
     }
 
-    public static TaxBracket Second()
+    public static TaxBracket SecondBracket()
     {
         return new TaxBracket(ExemptMinThreshold, SecondThreshold, 0.24f);
     }
 
-    public static TaxBracket Third()
+    public static TaxBracket ThirdBracket()
     {
         return new TaxBracket(SecondThreshold, ThirdThreshold, 0.30f);
     }
 
-    public static TaxBracket Fourth()
+    public static TaxBracket FourthBracket()
     {
         return new TaxBracket(ThirdThreshold, FourthThreshold, 0.37f);
     }
 
-    public static TaxBracket Fifth()
+    public static TaxBracket FifthBracket()
     {
         return new TaxBracket(FourthThreshold, FifthThreshold, 0.45f);
     }
 
-    public static TaxBracket Sixth()
+    public static TaxBracket SixthBracket()
     {
         return new TaxBracket(FifthThreshold, -1f, 0.47f);
+    }
+
+    public static bool BelongToSecondBracket(float income)
+    {
+        return BelongToBracket(income, SecondBracket()._lowerThreshold);
+    }
+
+    public static bool BelongToThirdBracket(float income)
+    {
+        return BelongToBracket(income, ThirdBracket()._lowerThreshold);
+    }
+
+    public static bool BelongToFourthBracket(float income)
+    {
+        return BelongToBracket(income, FourthBracket()._lowerThreshold);
+    }
+
+    public static bool BelongToFifthBracket(float income)
+    {
+        return BelongToBracket(income, FifthBracket()._lowerThreshold);
+    }
+
+    public static bool BelongToSixthBracket(float income)
+    {
+        return BelongToBracket(income, SixthBracket()._lowerThreshold);
+    }
+
+    private static bool BelongToBracket(float income, float lowerThreshold)
+    {
+        return income > lowerThreshold;
     }
 }
