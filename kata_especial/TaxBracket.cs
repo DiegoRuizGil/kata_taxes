@@ -12,7 +12,7 @@ public readonly struct TaxBracket
     private const float SecondThreshold = 20200;
     private const float ThirdThreshold = 35200;
     private const float FourthThreshold = 60000;
-    public const float FifthThreshold = 300000;
+    private const float FifthThreshold = 300000;
 
     private TaxBracket(float lowerThreshold, float upperThreshold, float percent)
     {

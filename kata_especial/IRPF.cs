@@ -35,18 +35,23 @@ public static class IRPF
         
         return Of(income - freelanceExpenses);
     }
-
-    private static float ApplyBracketTaxes(float income, TaxBracket bracket)
-    {
-        float amountExceeded = income - bracket.UpperThreshold;
-        float thresholdIncome = income - bracket.LowerThreshold;
-        if (amountExceeded > 0)
-            thresholdIncome -= amountExceeded;
-        return thresholdIncome * bracket.Percent;
-    }
     
     private static float ApplySixthBracketTaxes(float income)
     {
-        return (income - TaxBracket.FifthThreshold) * TaxBracket.SixthBracket().Percent;
+        return ApplyBracketTaxes(income, TaxBracket.SixthBracket().LowerThreshold, income, TaxBracket.SixthBracket().Percent);
+    }
+
+    private static float ApplyBracketTaxes(float income, TaxBracket bracket)
+    {
+        return ApplyBracketTaxes(income, bracket.LowerThreshold, bracket.UpperThreshold, bracket.Percent);
+    }
+
+    private static float ApplyBracketTaxes(float income, float lowerThreshold, float upperThreshold, float percent)
+    {
+        float amountExceeded = income - upperThreshold;
+        float thresholdIncome = income - lowerThreshold;
+        if (amountExceeded > 0)
+            thresholdIncome -= amountExceeded;
+        return thresholdIncome * percent;
     }
 }
