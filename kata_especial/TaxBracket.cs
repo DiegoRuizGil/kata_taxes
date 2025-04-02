@@ -1,4 +1,6 @@
-﻿namespace kata_especial;
+﻿using System.Diagnostics;
+
+namespace kata_especial;
 
 public readonly struct TaxBracket
 {
@@ -18,6 +20,8 @@ public readonly struct TaxBracket
 
     private TaxBracket(float lowerThreshold, float upperThreshold, float percent)
     {
+        Debug.Assert(lowerThreshold  < upperThreshold);
+        
         _lowerThreshold = lowerThreshold;
         _upperThreshold = upperThreshold;
         _percent = percent;
@@ -45,7 +49,7 @@ public readonly struct TaxBracket
 
     public static TaxBracket SixthBracket()
     {
-        return new TaxBracket(FifthThreshold, -1f, 0.47f);
+        return new TaxBracket(FifthThreshold, float.MaxValue, 0.47f);
     }
 
     public static bool BelongToSecondBracket(float income)
