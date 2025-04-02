@@ -12,10 +12,10 @@ public readonly struct TaxBracket
     public float UpperThreshold => _upperThreshold;
     public float Percent => _percent;
     
-    public const float ExemptMinThreshold = 15876;
-    public const float SecondThreshold = 20200;
-    public const float ThirdThreshold = 35200;
-    public const float FourthThreshold = 60000;
+    private const float ExemptMinThreshold = 15876;
+    private const float SecondThreshold = 20200;
+    private const float ThirdThreshold = 35200;
+    private const float FourthThreshold = 60000;
     public const float FifthThreshold = 300000;
 
     private TaxBracket(float lowerThreshold, float upperThreshold, float percent)
