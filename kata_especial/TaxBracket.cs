@@ -4,13 +4,9 @@ namespace kata_especial;
 
 public readonly struct TaxBracket
 {
-    private readonly float _lowerThreshold;
-    private readonly float _upperThreshold;
-    private readonly float _percent;
-    
-    public float LowerThreshold => _lowerThreshold;
-    public float UpperThreshold => _upperThreshold;
-    public float Percent => _percent;
+    public float LowerThreshold { get; }
+    public float UpperThreshold { get; }
+    public float Percent { get; }
     
     private const float ExemptMinThreshold = 15876;
     private const float SecondThreshold = 20200;
@@ -22,9 +18,9 @@ public readonly struct TaxBracket
     {
         Debug.Assert(lowerThreshold  < upperThreshold);
         
-        _lowerThreshold = lowerThreshold;
-        _upperThreshold = upperThreshold;
-        _percent = percent;
+        LowerThreshold = lowerThreshold;
+        UpperThreshold = upperThreshold;
+        Percent = percent;
     }
 
     public static TaxBracket SecondBracket()
@@ -54,27 +50,27 @@ public readonly struct TaxBracket
 
     public static bool BelongToSecondBracket(float income)
     {
-        return BelongToBracket(income, SecondBracket()._lowerThreshold);
+        return BelongToBracket(income, SecondBracket().LowerThreshold);
     }
 
     public static bool BelongToThirdBracket(float income)
     {
-        return BelongToBracket(income, ThirdBracket()._lowerThreshold);
+        return BelongToBracket(income, ThirdBracket().LowerThreshold);
     }
 
     public static bool BelongToFourthBracket(float income)
     {
-        return BelongToBracket(income, FourthBracket()._lowerThreshold);
+        return BelongToBracket(income, FourthBracket().LowerThreshold);
     }
 
     public static bool BelongToFifthBracket(float income)
     {
-        return BelongToBracket(income, FifthBracket()._lowerThreshold);
+        return BelongToBracket(income, FifthBracket().LowerThreshold);
     }
 
     public static bool BelongToSixthBracket(float income)
     {
-        return BelongToBracket(income, SixthBracket()._lowerThreshold);
+        return BelongToBracket(income, SixthBracket().LowerThreshold);
     }
 
     private static bool BelongToBracket(float income, float lowerThreshold)
