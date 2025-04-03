@@ -11,19 +11,19 @@ public static class IRPF
         var irpf = 0f;
 
         if (TaxBracket.Second().AppliesTo(income))
-            irpf += ApplyBracketTaxes(income, TaxBracket.Second());
+            irpf += TaxBracket.Second().ApplyTo(income);
         
         if (TaxBracket.Third().AppliesTo(income))
-            irpf += ApplyBracketTaxes(income, TaxBracket.Third());
+            irpf += TaxBracket.Third().ApplyTo(income);
         
         if (TaxBracket.Fourth().AppliesTo(income))
-            irpf += ApplyBracketTaxes(income, TaxBracket.Fourth());
+            irpf += TaxBracket.Fourth().ApplyTo(income);
         
         if (TaxBracket.Fifth().AppliesTo(income))
-            irpf += ApplyBracketTaxes(income, TaxBracket.Fifth());
+            irpf += TaxBracket.Fifth().ApplyTo(income);
         
         if (TaxBracket.Sixth().AppliesTo(income))
-            irpf += ApplySixthBracketTaxes(income);
+            irpf += TaxBracket.Sixth().ApplyTo(income);
         
         return irpf;
     }
@@ -34,24 +34,5 @@ public static class IRPF
         Debug.Assert(income > freelanceExpenses);
         
         return Of(income - freelanceExpenses);
-    }
-    
-    private static float ApplySixthBracketTaxes(float income)
-    {
-        return ApplyBracketTaxes(income, TaxBracket.Sixth().LowerThreshold, income, TaxBracket.Sixth().Percent);
-    }
-
-    private static float ApplyBracketTaxes(float income, TaxBracket bracket)
-    {
-        return ApplyBracketTaxes(income, bracket.LowerThreshold, bracket.UpperThreshold, bracket.Percent);
-    }
-
-    private static float ApplyBracketTaxes(float income, float lowerThreshold, float upperThreshold, float percent)
-    {
-        float amountExceeded = income - upperThreshold;
-        float thresholdIncome = income - lowerThreshold;
-        if (amountExceeded > 0)
-            thresholdIncome -= amountExceeded;
-        return thresholdIncome * percent;
     }
 }

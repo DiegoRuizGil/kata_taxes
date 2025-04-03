@@ -52,4 +52,13 @@ public readonly struct TaxBracket
     {
         return income > LowerThreshold;
     }
+
+    public float ApplyTo(float income)
+    {
+        float amountExceeded = income - UpperThreshold;
+        float thresholdIncome = income - LowerThreshold;
+        if (amountExceeded > 0)
+            thresholdIncome -= amountExceeded;
+        return thresholdIncome * Percent;
+    }
 }
