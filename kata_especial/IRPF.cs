@@ -10,19 +10,19 @@ public static class IRPF
 
         var irpf = 0f;
 
-        if (TaxBracket.BelongToSecondBracket(income))
-            irpf += ApplyBracketTaxes(income, TaxBracket.SecondBracket());
+        if (TaxBracket.Second().AppliesTo(income))
+            irpf += ApplyBracketTaxes(income, TaxBracket.Second());
         
-        if (TaxBracket.BelongToThirdBracket(income))
-            irpf += ApplyBracketTaxes(income, TaxBracket.ThirdBracket());
+        if (TaxBracket.Third().AppliesTo(income))
+            irpf += ApplyBracketTaxes(income, TaxBracket.Third());
         
-        if (TaxBracket.BelongToFourthBracket(income))
-            irpf += ApplyBracketTaxes(income, TaxBracket.FourthBracket());
+        if (TaxBracket.Fourth().AppliesTo(income))
+            irpf += ApplyBracketTaxes(income, TaxBracket.Fourth());
         
-        if (TaxBracket.BelongToFifthBracket(income))
-            irpf += ApplyBracketTaxes(income, TaxBracket.FifthBracket());
+        if (TaxBracket.Fifth().AppliesTo(income))
+            irpf += ApplyBracketTaxes(income, TaxBracket.Fifth());
         
-        if (TaxBracket.BelongToSixthBracket(income))
+        if (TaxBracket.Sixth().AppliesTo(income))
             irpf += ApplySixthBracketTaxes(income);
         
         return irpf;
@@ -38,7 +38,7 @@ public static class IRPF
     
     private static float ApplySixthBracketTaxes(float income)
     {
-        return ApplyBracketTaxes(income, TaxBracket.SixthBracket().LowerThreshold, income, TaxBracket.SixthBracket().Percent);
+        return ApplyBracketTaxes(income, TaxBracket.Sixth().LowerThreshold, income, TaxBracket.Sixth().Percent);
     }
 
     private static float ApplyBracketTaxes(float income, TaxBracket bracket)
