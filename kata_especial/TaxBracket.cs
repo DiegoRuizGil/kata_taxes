@@ -55,6 +55,8 @@ public readonly struct TaxBracket
 
     public float ApplyTo(float income)
     {
+        if (!AppliesTo(income)) return 0;
+        
         float amountExceeded = income - UpperThreshold;
         float thresholdIncome = income - LowerThreshold;
         if (amountExceeded > 0)
