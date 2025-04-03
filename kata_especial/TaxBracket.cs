@@ -48,9 +48,13 @@ public readonly struct TaxBracket
         return new TaxBracket(FifthThreshold, float.MaxValue, 0.47f);
     }
 
-    public bool AppliesTo(float income)
+    public static IEnumerable<TaxBracket> All()
     {
-        return income > LowerThreshold;
+        yield return Second();
+        yield return Third();
+        yield return Fourth();
+        yield return Fifth();
+        yield return Sixth();
     }
 
     public float ApplyTo(float income)
@@ -62,5 +66,10 @@ public readonly struct TaxBracket
         if (amountExceeded > 0)
             thresholdIncome -= amountExceeded;
         return thresholdIncome * Percent;
+    }
+    
+    private bool AppliesTo(float income)
+    {
+        return income > LowerThreshold;
     }
 }
