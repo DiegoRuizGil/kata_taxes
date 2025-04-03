@@ -4,72 +4,65 @@ namespace kata_especial;
 
 public readonly struct TaxBracket
 {
-    public float LowerThreshold { get; }
-    public float UpperThreshold { get; }
-    public float Percent { get; }
-    
-    private const float ExemptMinThreshold = 15876;
-    private const float SecondThreshold = 20200;
-    private const float ThirdThreshold = 35200;
-    private const float FourthThreshold = 60000;
-    private const float FifthThreshold = 300000;
+    private readonly float _lowerThreshold;
+    private readonly float _upperThreshold;
+    private readonly float _percent;
 
     private TaxBracket(float lowerThreshold, float upperThreshold, float percent)
     {
         Debug.Assert(lowerThreshold  < upperThreshold);
         
-        LowerThreshold = lowerThreshold;
-        UpperThreshold = upperThreshold;
-        Percent = percent;
+        _lowerThreshold = lowerThreshold;
+        _upperThreshold = upperThreshold;
+        _percent = percent;
     }
 
-    public static TaxBracket Second()
+    private static TaxBracket First(Threshold threshold)
     {
-        return new TaxBracket(ExemptMinThreshold, SecondThreshold, 0.24f);
+        return new TaxBracket(0f, threshold.income, threshold.percent);
     }
 
-    public static TaxBracket Third()
+    public static IEnumerable<TaxBracket> AllFrom2024()
     {
-        return new TaxBracket(SecondThreshold, ThirdThreshold, 0.30f);
+        return FromThresholds([
+            new Threshold(15876, 0.00f),
+            new Threshold(20200, 0.24f),
+            new Threshold(35200, 0.30f),
+            new Threshold(60000, 0.37f),
+            new Threshold(300000, 0.45f),
+            new Threshold(float.MaxValue, 0.47f)
+        ]);
     }
 
-    public static TaxBracket Fourth()
+    private static IEnumerable<TaxBracket> FromThresholds(Threshold[] thresholds)
     {
-        return new TaxBracket(ThirdThreshold, FourthThreshold, 0.37f);
-    }
+        var brackets = new List<TaxBracket>();
+        brackets.Add(First(thresholds.First()));
+        thresholds = thresholds.Skip(1).ToArray();
+        foreach (var threshold in thresholds)
+            brackets.Add(brackets.Last().Next(threshold));
 
-    public static TaxBracket Fifth()
-    {
-        return new TaxBracket(FourthThreshold, FifthThreshold, 0.45f);
-    }
-
-    public static TaxBracket Sixth()
-    {
-        return new TaxBracket(FifthThreshold, float.MaxValue, 0.47f);
-    }
-
-    public static IEnumerable<TaxBracket> All()
-    {
-        yield return Second();
-        yield return Third();
-        yield return Fourth();
-        yield return Fifth();
-        yield return Sixth();
+        return brackets;
     }
 
     public float ApplyTo(float income)
     {
         if (!AppliesTo(income)) return 0;
         
-        float amountExceeded = income - UpperThreshold;
-        float thresholdIncome = income - LowerThreshold;
+        float amountExceeded = income - _upperThreshold;
+        float thresholdIncome = income - _lowerThreshold;
         if (amountExceeded > 0)
             thresholdIncome -= amountExceeded;
-        return thresholdIncome * Percent;
+        return thresholdIncome * _percent;
     }
     
     private bool AppliesTo(float income)
     {
-        return income > LowerThreshold;
+        return income > _lowerThreshold;
+    }
+
+    private TaxBracket Next(Threshold threshold)
+    {
+        return new TaxBracket(_upperThreshold, threshold.income, threshold.percent);
     }
 }

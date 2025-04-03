@@ -16,6 +16,6 @@ public static class IRPF
     {
         Debug.Assert(income >= 0);
 
-        return TaxBracket.All().Sum(bracket => bracket.ApplyTo(income));
+        return TaxBracket.AllFrom2024().Sum(bracket => bracket.ApplyTo(income));
     }
 }
