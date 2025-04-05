@@ -18,13 +18,19 @@ public class PaySheetTests
      */
 
     [Test]
-    public void NetSalaryWith0WithholdingTaxRate()
+    public void NetSalaryWithWithholdingTaxRateAt0()
     {
         Assert.That(NetSalary(1800.00f, 0.00f), Is.EqualTo(1800.00f));
     }
 
+    [Test]
+    public void NetSalaryWithWithholdingTaxRateAt15()
+    {
+        Assert.That(NetSalary(1800.00f, 0.15f), Is.EqualTo(1530.00f));
+    }
+
     private float NetSalary(float grossSalary, float withholdingTaxRate)
     {
-        return grossSalary;
+        return grossSalary * (1 - withholdingTaxRate);
     }
 }
