@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using NUnit.Framework.Constraints;
 
 namespace kata_especial;
 
@@ -36,6 +35,19 @@ public class PaySheetTests
         Assert.That(AnnualSalary(1800.00f, 0.15f, 12), Is.EqualTo(18360.00f));
     }
 
+    [Test]
+    public void TotalAnnualEmployerSocialSecurityContribution()
+    {
+        Assert.That(AnnualSocialSecurityContribution(2450.00f, 1800.00f, 12), Is.EqualTo(7800.00f));
+    }
+
+    private static float AnnualSocialSecurityContribution(float companyContribution, float grossSalary, int payments)
+    {
+        Debug.Assert(companyContribution > grossSalary);
+        
+        return (companyContribution - grossSalary) * payments;
+    }
+
     private static float AnnualSalary(float grossSalary, float withholdingTaxRate, int payments)
     {
         return NetSalary(grossSalary, withholdingTaxRate) * payments;
@@ -49,6 +61,4 @@ public class PaySheetTests
         
         return grossSalary * (1 - withholdingTaxRate);
     }
-    
-    
 }
