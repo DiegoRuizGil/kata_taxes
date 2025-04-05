@@ -1,8 +1,6 @@
-using System.Diagnostics;
-
 namespace kata_especial;
 
-public class Tests
+public class IRPFTest
 {
     [Test]
     public void ExemptMin()
