@@ -1,4 +1,4 @@
-﻿using NUnit.Framework.Constraints;
+﻿using System.Diagnostics;
 
 namespace kata_especial;
 
@@ -31,6 +31,10 @@ public class PaySheetTests
 
     private float NetSalary(float grossSalary, float withholdingTaxRate)
     {
+        Debug.Assert(withholdingTaxRate >= 0);
+        Debug.Assert(withholdingTaxRate <= 1);
+        Debug.Assert(grossSalary > 0);
+        
         return grossSalary * (1 - withholdingTaxRate);
     }
 }
