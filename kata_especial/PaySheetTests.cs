@@ -1,6 +1,4 @@
-﻿using System.Diagnostics;
-
-namespace kata_especial;
+﻿namespace kata_especial;
 
 public class PaySheetTests
 {
@@ -41,13 +39,7 @@ public class PaySheetTests
     [Test]
     public void TotalAnnualEmployerSocialSecurityContribution()
     {
-        Assert.That(AnnualSocialSecurityContribution(2450.00f, 1800.00f, 12), Is.EqualTo(7800.00f));
-    }
-
-    private static float AnnualSocialSecurityContribution(float companyContribution, float grossSalary, int payments)
-    {
-        Debug.Assert(companyContribution > grossSalary);
-        
-        return (companyContribution - grossSalary) * payments;
+        var paySheet = new PaySheet(1800.00f, 0.00f, 2450.00f);
+        Assert.That(paySheet.AnnualSocialSecurityCompanyContribution(12), Is.EqualTo(7800.00f));
     }
 }
