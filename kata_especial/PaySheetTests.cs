@@ -35,7 +35,7 @@ public class PaySheetTests
     public void AnnualSalaryWith12Payments()
     {
         var paySheet = new PaySheet(1800.00f, 0.15f, 1800.00f);
-        Assert.That(AnnualSalary(12, paySheet), Is.EqualTo(18360.00f));
+        Assert.That(paySheet.AnnualSalary(12), Is.EqualTo(18360.00f));
     }
 
     [Test]
@@ -49,10 +49,5 @@ public class PaySheetTests
         Debug.Assert(companyContribution > grossSalary);
         
         return (companyContribution - grossSalary) * payments;
-    }
-
-    private static float AnnualSalary(int payments, PaySheet paySheet)
-    {
-        return paySheet.NetSalary * payments;
     }
 }

@@ -19,6 +19,9 @@ public class PaySheet
         WithholdingTaxRate = withholdingTaxRate;
         CompanyContribution = companyContribution;
     }
-    
-    
+
+    public float AnnualSalary(int payments)
+    {
+        return NetSalary * payments;
+    }
 }
