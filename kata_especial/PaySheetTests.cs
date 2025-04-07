@@ -5,7 +5,7 @@ namespace kata_especial;
 public class PaySheetTests
 {
     /*
-     * nomina:
+     * nomina (paysheet):
      *  - (derivado) sueldo neto del trabajador (employee's net salary)
      *  - porcentaje IRPF deducido (15%) (withholding tax rate)
      *  - aportacion empresa -> bruto + seguridad social (company's contribution)
@@ -20,19 +20,22 @@ public class PaySheetTests
     [Test]
     public void NetSalaryWithWithholdingTaxRateAt0()
     {
-        Assert.That(NetSalary(1800.00f, 0.00f), Is.EqualTo(1800.00f));
+        var paySheet = new PaySheet(1800.00f, 0.00f, 1800.00f);
+        Assert.That(paySheet.NetSalary, Is.EqualTo(1800.00f));
     }
 
     [Test]
     public void NetSalaryWithWithholdingTaxRateAt15()
     {
-        Assert.That(NetSalary(1800.00f, 0.15f), Is.EqualTo(1530.00f));
+        var paySheet = new PaySheet(1800.00f, 0.15f, 1800.00f);
+        Assert.That(paySheet.NetSalary, Is.EqualTo(1530.00f));
     }
 
     [Test]
     public void AnnualSalaryWith12Payments()
     {
-        Assert.That(AnnualSalary(1800.00f, 0.15f, 12), Is.EqualTo(18360.00f));
+        var paySheet = new PaySheet(1800.00f, 0.15f, 1800.00f);
+        Assert.That(AnnualSalary(12, paySheet), Is.EqualTo(18360.00f));
     }
 
     [Test]
@@ -48,17 +51,8 @@ public class PaySheetTests
         return (companyContribution - grossSalary) * payments;
     }
 
-    private static float AnnualSalary(float grossSalary, float withholdingTaxRate, int payments)
+    private static float AnnualSalary(int payments, PaySheet paySheet)
     {
-        return NetSalary(grossSalary, withholdingTaxRate) * payments;
-    }
-
-    private static float NetSalary(float grossSalary, float withholdingTaxRate)
-    {
-        Debug.Assert(withholdingTaxRate >= 0);
-        Debug.Assert(withholdingTaxRate <= 1);
-        Debug.Assert(grossSalary > 0);
-        
-        return grossSalary * (1 - withholdingTaxRate);
+        return paySheet.NetSalary * payments;
     }
 }
