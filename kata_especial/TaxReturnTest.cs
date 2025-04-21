@@ -12,8 +12,8 @@ public class TaxReturnTest
      * clase TaxReturn (Salary)
      *  X metodo: cantidad de impuestos año anterior (IRPF retenido)
      *  X metodo: porcentaje real IRPF año anterior
-     *  - metodos: sale a pagar y a devolver
-     *  - metodo: obligado o no a presentar (22.000)
+     *  X metodos: sale a pagar y a devolver
+     *  X metodo: obligado o no a presentar (22.000)
      *  - metodo: deducir o no el alquiler (depende de la comunidad autonoma, ej: Andalucia, 19.000)
      * 
      */
@@ -100,5 +100,33 @@ public class TaxReturnTest
         var taxReturn = new TaxReturn(salary);
         
         Assert.That(taxReturn.IsTaxDue, Is.False);
+    }
+
+    [Test]
+    public void RequiredToSubmitTaxReturn()
+    {
+        int payments = 12;
+        var paySheets = new PaySheet[payments];
+        for (var i = 0; i < payments; i++)
+            paySheets[i] = new PaySheet(2400.00f, 0.15f, 2400.00f);
+
+        var salary = new Salary(paySheets);
+        var taxReturn = new TaxReturn(salary);
+        
+        Assert.That(taxReturn.RequiredToSubmit, Is.True);
+    }
+    
+    [Test]
+    public void NotRequiredToSubmitTaxReturn()
+    {
+        int payments = 12;
+        var paySheets = new PaySheet[payments];
+        for (var i = 0; i < payments; i++)
+            paySheets[i] = new PaySheet(1800.00f, 0.15f, 1800.00f);
+
+        var salary = new Salary(paySheets);
+        var taxReturn = new TaxReturn(salary);
+        
+        Assert.That(taxReturn.RequiredToSubmit, Is.False);
     }
 }
