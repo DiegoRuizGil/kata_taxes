@@ -32,14 +32,24 @@ public class PaySheetTests
     [Test]
     public void AnnualSalaryWith12Payments()
     {
-        var paySheet = new PaySheet(1800.00f, 0.15f, 1800.00f);
-        Assert.That(paySheet.AnnualSalary(12), Is.EqualTo(18360.00f));
+        int payments = 12;
+        var paySheets = new PaySheet[payments];
+        for (var i = 0; i < payments; i++)
+            paySheets[i] = new PaySheet(1800.00f, 0.15f, 1800.00f);
+        var salary = new Salary(paySheets);
+        
+        Assert.That(salary.NetIncome, Is.EqualTo(18360.00f));
     }
 
     [Test]
     public void TotalAnnualEmployerSocialSecurityContribution()
     {
-        var paySheet = new PaySheet(1800.00f, 0.00f, 2450.00f);
-        Assert.That(paySheet.AnnualSocialSecurityCompanyContribution(12), Is.EqualTo(7800.00f));
+        int payments = 12;
+        var paySheets = new PaySheet[payments];
+        for (var i = 0; i < payments; i++)
+            paySheets[i] = new PaySheet(1800.00f, 0.15f, 2450.00f);
+        var salary = new Salary(paySheets);
+        
+        Assert.That(salary.SocialSecurityCompanyContribution, Is.EqualTo(7800.00f));
     }
 }

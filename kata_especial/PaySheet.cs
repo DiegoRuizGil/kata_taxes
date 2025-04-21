@@ -4,30 +4,29 @@ namespace kata_especial;
 
 public class PaySheet
 {
-    private readonly float _withholdingTaxRate;
-    private readonly float _companyContribution;
-    private readonly float _grossSalary;
+    /*
+     * payments -> atributo
+     * salario -> año
+     * sueldo -> mes (wage)
+     *
+     * salario -> nuevo objeto
+     *  - lista de nominas
+     */
+    
+    public readonly float withholdingTaxRate;
+    public readonly float companyContribution;
+    public readonly float grossWage;
 
-    public float NetSalary => _grossSalary * (1 - _withholdingTaxRate);
+    public float NetSalary => grossWage * (1 - withholdingTaxRate);
 
-    public PaySheet(float grossSalary, float withholdingTaxRate, float companyContribution)
+    public PaySheet(float grossWage, float withholdingTaxRate, float companyContribution)
     {
-        Debug.Assert(grossSalary > 0);
-        Debug.Assert(companyContribution >= grossSalary);
+        Debug.Assert(grossWage > 0);
+        Debug.Assert(companyContribution >= grossWage);
         Debug.Assert(withholdingTaxRate is >= 0 and <= 1);
 
-        _grossSalary = grossSalary;
-        _withholdingTaxRate = withholdingTaxRate;
-        _companyContribution = companyContribution;
-    }
-
-    public float AnnualSalary(int payments)
-    {
-        return NetSalary * payments;
-    }
-
-    public float AnnualSocialSecurityCompanyContribution(int payments)
-    {
-        return (_companyContribution - _grossSalary) * payments;
+        this.grossWage = grossWage;
+        this.withholdingTaxRate = withholdingTaxRate;
+        this.companyContribution = companyContribution;
     }
 }

@@ -4,6 +4,10 @@ namespace kata_especial;
 
 public static class IRPF
 {
+    /*
+     * IRPF -> pasar a clase no estatica si veo que es necesario
+     */
+    
     public static float Of(float income, float freelanceExpenses)
     {
         Debug.Assert(freelanceExpenses >= 0);
