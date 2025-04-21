@@ -73,4 +73,32 @@ public class TaxReturnTest
         
         Assert.That(taxReturn.IsTaxRefund, Is.False);
     }
+    
+    [Test]
+    public void TaxReturnIsPayable()
+    {
+        int payments = 12;
+        var paySheets = new PaySheet[payments];
+        for (var i = 0; i < payments; i++)
+            paySheets[i] = new PaySheet(2400.00f, 0.00f, 2400.00f);
+
+        var salary = new Salary(paySheets);
+        var taxReturn = new TaxReturn(salary);
+        
+        Assert.That(taxReturn.IsTaxDue, Is.True);
+    }
+    
+    [Test]
+    public void TaxReturnIsNotPayable()
+    {
+        int payments = 12;
+        var paySheets = new PaySheet[payments];
+        for (var i = 0; i < payments; i++)
+            paySheets[i] = new PaySheet(2400.00f, 0.15f, 2400.00f);
+
+        var salary = new Salary(paySheets);
+        var taxReturn = new TaxReturn(salary);
+        
+        Assert.That(taxReturn.IsTaxDue, Is.False);
+    }
 }
