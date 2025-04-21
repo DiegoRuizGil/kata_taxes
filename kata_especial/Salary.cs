@@ -9,8 +9,6 @@ public class Salary
     public float GrossIncome => _paySheets.Sum(paySheet => paySheet.grossWage);
     public float NetIncome => _paySheets.Sum(paySheet => paySheet.grossWage * (1 - paySheet.withholdingTaxRate));
     public float SocialSecurityCompanyContribution => _paySheets.Sum(paySheet => paySheet.companyContribution - paySheet.grossWage);
-
-    public float WithholdingTaxes => _paySheets.Sum(paySheet => paySheet.grossWage * paySheet.withholdingTaxRate);
     
     public Salary(PaySheet[] paySheets)
     {

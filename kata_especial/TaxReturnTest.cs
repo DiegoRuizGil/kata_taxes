@@ -29,7 +29,7 @@ public class TaxReturnTest
         var salary = new Salary(paySheets);
         var taxReturn = new TaxReturn(salary);
         
-        Assert.That(taxReturn.LastYearWithholdingTaxes, Is.EqualTo(3240.00f));
+        Assert.That(taxReturn.WithholdingTaxes, Is.EqualTo(3240.00f).Within(0.01f));
     }
 
     [Test]
@@ -44,5 +44,33 @@ public class TaxReturnTest
         var taxReturn = new TaxReturn(salary);
         
         Assert.That(taxReturn.ActualTaxes, Is.EqualTo(3617.76f).Within(0.01f));
+    }
+
+    [Test]
+    public void TaxReturnIsRefunded()
+    {
+        int payments = 12;
+        var paySheets = new PaySheet[payments];
+        for (var i = 0; i < payments; i++)
+            paySheets[i] = new PaySheet(2400.00f, 0.15f, 2400.00f);
+
+        var salary = new Salary(paySheets);
+        var taxReturn = new TaxReturn(salary);
+        
+        Assert.That(taxReturn.IsTaxRefund, Is.True);
+    }
+    
+    [Test]
+    public void TaxReturnIsNotRefundable()
+    {
+        int payments = 12;
+        var paySheets = new PaySheet[payments];
+        for (var i = 0; i < payments; i++)
+            paySheets[i] = new PaySheet(2400.00f, 0.00f, 2400.00f);
+
+        var salary = new Salary(paySheets);
+        var taxReturn = new TaxReturn(salary);
+        
+        Assert.That(taxReturn.IsTaxRefund, Is.False);
     }
 }
