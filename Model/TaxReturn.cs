@@ -1,4 +1,4 @@
-﻿namespace kata_especial;
+﻿namespace Model;
 
 public enum Region
 {

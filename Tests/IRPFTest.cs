@@ -1,4 +1,6 @@
-namespace kata_especial;
+using Model;
+
+namespace Tests;
 
 public class IRPFTest
 {

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace kata_especial;
+namespace Model;
 
 public class PaySheet
 {
