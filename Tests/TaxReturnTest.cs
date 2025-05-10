@@ -143,7 +143,7 @@ public class TaxReturnTest
         var salary = new Salary(paySheets);
         var taxReturn = new TaxReturn(salary);
         
-        Assert.That(taxReturn.IsRentDeductible(Region.Andalucia), Is.True);
+        Assert.That(taxReturn.IsRentDeductible(new Andalucia()), Is.True);
     }
     
     [Test]
@@ -157,6 +157,6 @@ public class TaxReturnTest
         var salary = new Salary(paySheets);
         var taxReturn = new TaxReturn(salary);
         
-        Assert.That(taxReturn.IsRentDeductible(Region.Andalucia), Is.False);
+        Assert.That(taxReturn.IsRentDeductible(new Andalucia()), Is.False);
     }
 }
